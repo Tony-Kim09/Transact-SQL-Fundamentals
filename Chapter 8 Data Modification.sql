@@ -13,7 +13,7 @@
 INSERT INTO dbo.Customers VALUES(100, N'Coho Winery', N'USA', N'WA', N'Redmond');
 
 --Question 1.2: Insert into the dbo.Customers table all customers 
---				from Sales.Customers who placed orders
+--		from Sales.Customers who placed orders
 
 INSERT INTO dbo.Customers(custid, companyname, country, region, city)
 	SELECT C.custid, C.companyname, C.country, C.region, C.city 
@@ -21,9 +21,10 @@ INSERT INTO dbo.Customers(custid, companyname, country, region, city)
 			WHERE EXISTS
 				(SELECT 1 FROM Sales.Orders AS O
 				 WHERE O.custid = C.custid);
+				 
 --Question 1.3: Use a SELECT INTO statement to create and populate the dbo.Orders
---				table with orders from the Sales.Orders that were placed in 
---			    the years 2014 through 2016
+--		table with orders from the Sales.Orders that were placed in 
+--	        the years 2014 through 2016
 
 SELECT * INTO dbo.Orders
 FROM Sales.Orders
@@ -31,8 +32,8 @@ WHERE orderdate >= '20140101'
 	AND orderdate < '20170101';
 
 --Question 2: Delete from the dbo.Orders table orders that were placed
---			  before August 2014. Use the OUTPUT clause to return the orderid
---			  and orderdate of the deleted orders
+--	      before August 2014. Use the OUTPUT clause to return the orderid
+--	      and orderdate of the deleted orders
 
 DELETE FROM dbo.Orders
 	OUTPUT deleted.orderid, deleted.orderdate
@@ -54,7 +55,7 @@ USING (SELECT * FROM dbo.Customers WHERE country = N'Brazil') AS C
 WHEN MATCHED THEN DELETE;
 
 --Question4: Run the following query against dbo.Customers,
---			 and notice that some rows have a NULL in the region column
+--	     and notice that some rows have a NULL in the region column
 
 SELECT * FROM dbo.Customers;
 
@@ -62,10 +63,10 @@ SELECT * FROM dbo.Customers;
 custid      companyname    country         region     city
 ----------- -------------- --------------- ---------- --------------- 
 1           Customer NRZBB Germany         NULL       Berlin
-2           Customer MLTDN Mexico          NULL       México D.F.
-3           Customer KBUDE Mexico          NULL       México D.F.
+2           Customer MLTDN Mexico          NULL       MÃ©xico D.F.
+3           Customer KBUDE Mexico          NULL       MÃ©xico D.F.
 4           Customer HFBZG UK              NULL       London
-5           Customer HGVLZ Sweden          NULL       Luleå
+5           Customer HGVLZ Sweden          NULL       LuleÃ¥
 6           Customer XHXJV Germany         NULL       Mannheim
 7           Customer QXVLA France          NULL       Strasbourg
 8           Customer QUHWH Spain           NULL       Madrid
@@ -78,18 +79,18 @@ custid      companyname    country         region     city
 UPDATE dbo.Customers
 SET region = '<None>'
 OUTPUT deleted.custid,
-		deleted.region AS oldregion,
-		inserted.region AS newregion
+	deleted.region AS oldregion,
+	inserted.region AS newregion
 WHERE region IS NULL;
 
 --Question 5: Update in the dbo.Orders table all orders placed by UK customers
---			  and set their shipcountry, shipregion, shipcity values
---			  to the country, region, city values of the corresponding customers
---			  from dbo.Customers
+--	      and set their shipcountry, shipregion, shipcity values
+--	      to the country, region, city values of the corresponding customers
+--	      from dbo.Customers
 
 MERGE INTO dbo.Orders AS O
 USING (SELECT * FROM dbo.Customers WHERE country = N'UK') AS C
-		ON O.custid = C.custid
+	ON O.custid = C.custid
 WHEN MATCHED THEN
 	UPDATE SET
 		O.shipcountry = C.country,
