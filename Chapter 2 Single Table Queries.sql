@@ -28,7 +28,7 @@ WHERE lastname LIKE '%e%e%'
 	OR lastname LIKE '%ee%';
 
 --Question 4: Return orders with total value(qty*unitprice) greater than 10000
---			  sorted by total value. 
+--	      sorted by total value. 
 
 SELECT orderid, SUM(qty*unitprice) AS totalvalue
 FROM Sales.OrderDetails
@@ -37,9 +37,9 @@ HAVING SUM(qty*unitprice) > 10000
 ORDER BY totalvalue DESC;
 
 --Question 5: Write a query against the HR.Employeestable that returns employees
---			  with a last name that starts with a lower case letter. Remember that
---			  the collation of the sample database is case insensitive
---			  (Latin1_General_CI_AS). 
+--	      with a last name that starts with a lower case letter. Remember that
+--	      the collation of the sample database is case insensitive
+--	(Latin1_General_CI_AS). 
 
 SELECT empid, lastname
 FROM HR.Employees
@@ -74,7 +74,7 @@ GROUP BY shipcountry
 ORDER BY avgfreight DESC;
 
 --Question 8: Calculate row numbers for orders based on orderdate ordering 
---			 (using orderid as tiebreaker) for each customer separately
+--	      (using orderid as tiebreaker) for each customer separately
 
 SELECT custid, orderdate, orderid,
   ROW_NUMBER() OVER(PARTITION BY custid ORDER BY orderdate, orderid) AS rownumber
@@ -82,7 +82,7 @@ FROM Sales.Orders
 ORDER BY custid, rownumber;
 
 --Question 9: Figure out and return for each employee the gender based on the title of courtesy
---			  Ms., Mrs. - Female, Mr. -Male, Dr. -Unknown
+--	      Ms., Mrs. - Female, Mr. -Male, Dr. -Unknown
 
 SELECT empid, firstname, lastname, titleofcourtesy,
   CASE titleofcourtesy
@@ -94,7 +94,7 @@ SELECT empid, firstname, lastname, titleofcourtesy,
 FROM HR.Employees;
 
 --Question 10: Return for each customer the customer ID and region, sort the rows in the
---			   output by region having NULLs sort last (after non-NULL values). 
+--	       output by region having NULLs sort last (after non-NULL values). 
 
 SELECT custid, region
 FROM Sales.Customers
