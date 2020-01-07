@@ -1,7 +1,6 @@
 ---------------------------------------------------------------------
 -- Microsoft SQL Server T-SQL Fundamentals
 -- Chapter 02 - Single-Table Queries
--- Exercises
 ---------------------------------------------------------------------
 
 --Question 1: Return orders placed in June 2015
