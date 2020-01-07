@@ -19,7 +19,7 @@ WHERE N.n <= 5
 ORDER BY N.n;
 
 --Question 1.2 (Advanced): Write a query that returns a row for each employee and day
---						   in the range June 12, 2016 - June 16 2016.
+--			   in the range June 12, 2016 - June 16 2016.
 
 SELECT E.empid,
   DATEADD(day, N.n, CAST('20160611' AS DATE)) AS dt
@@ -82,15 +82,15 @@ FROM Sales.Customers AS C
 WHERE O.orderdate = '20160212';
 
 --Question 7 (Advanced): Write a query that returns all customers in the output, but 
---						 matches them with their respective orders only if they were placed
---						 on February 12, 2016
+--			 matches them with their respective orders only if they were placed
+--			 on February 12, 2016
 
 SELECT C.custid, C.companyname, O.orderid, O.orderdate
 FROM Sales.Customers AS C
 LEFT JOIN (SELECT custid, orderid, orderdate
-			FROM Sales.Orders
-			WHERE orderdate = '20160212') AS O
-		ON C.custid = O.custid;
+		FROM Sales.Orders
+		WHERE orderdate = '20160212') AS O
+	ON C.custid = O.custid;
 
 -- OR 
 
@@ -101,7 +101,7 @@ FROM Sales.Customers AS C
     AND O.orderdate = '20160212';
 
 --Question 8 (Advanced): Explain why the following query isn't a correct solution
---						 for exercise 7
+--			 for exercise 7
 
 SELECT C.custid, C.companyname, O.orderid, O.orderdate
 FROM Sales.Customers AS C
@@ -116,13 +116,13 @@ WHERE O.orderdate = '20160212'
    results that are false. */
 
 --Question 9 (Advanced): Return all customers, and for each return a Yes/No value depending
---						 on whether the customer placed an order on Feb 12, 2016
+--			 on whether the customer placed an order on Feb 12, 2016
 
 SELECT DISTINCT C.custid, C.companyname,
 	CASE
-		WHEN O.orderdate = '20160212' THEN 'Yes'
-		ELSE 'No'
-		END AS OrderedOn20160212
+	     WHEN O.orderdate = '20160212' THEN 'Yes'
+	     ELSE 'No'
+	     END AS OrderedOn20160212
 FROM Sales.Customers AS C
 	LEFT JOIN Sales.Orders AS O
 	ON O.custid = C.custid
